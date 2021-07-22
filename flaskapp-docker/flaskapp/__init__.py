@@ -7,20 +7,20 @@ from flask_qrcode import QRcode
 db = SQLAlchemy()
 
 def create_app():
-    application = Flask(__name__, static_url_path='/static')
+    app = Flask(__name__, static_url_path='/static')
 
-    application.config['SECRET_KEY'] = '{:W&gZeh$,ORxFNU'
-    application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    application.static_folder = 'static'
+    app.config['SECRET_KEY'] = '{:W&gZeh$,ORxFNU'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    app.static_folder = 'static'
 
-    db.init_app(application)
-    QRcode(application)
+    db.init_app(app)
+    QRcode(app)
 
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
-    login_manager.init_app(application)
+    login_manager.init_app(app)
 
     from .models import User
 
@@ -31,12 +31,12 @@ def create_app():
 
     # blueprint for auth routes in our app
     from .auth import auth as auth_blueprint
-    application.register_blueprint(auth_blueprint)
+    app.register_blueprint(auth_blueprint)
 
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
-    application.register_blueprint(main_blueprint)
+    app.register_blueprint(main_blueprint)
 
-    return application
+    return app
 
 
