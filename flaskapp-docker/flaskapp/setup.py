@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='project',
-    packages=['project'],
+    name='flaskapp',
+    packages=['flaskapp'],
     include_package_data=True,
     install_requires=[
         'flask',
